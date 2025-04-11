@@ -35,7 +35,7 @@ async def get_balance(mnemonic):
     
     balance = await wallet.balance()
 def to_amount(balance):
-    return balance / 1_000_000_000  # Пример преобразования
+    return balance / 1_000_000_000  
 
 async def get_balance(mnemonic):
     try:

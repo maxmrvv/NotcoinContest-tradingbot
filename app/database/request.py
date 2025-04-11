@@ -3,16 +3,6 @@ from app.database.models import async_session
 
 from sqlalchemy import select, update, delete
 
-from tonutils.client import TonapiClient
-from tonutils.wallet import (WalletV4R2)
-
-
-async def create_wallet():
-    wallet = Wallet()  
-    mnemonic = wallet.generate_mnemonic()  
-    address = wallet.get_address()  
-    return address, mnemonic
-
 async def set_user(tg_id, address, mnemonic):
     async with async_session() as session:
 

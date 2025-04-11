@@ -7,46 +7,15 @@ import app.keyboards as kb
 import asyncio
 import aiohttp
 
-from pytoniq_core import Address
-from tonutils.jetton.dex.stonfi import StonfiRouterV2
-from tonutils.jetton.dex.stonfi.v2.pton.constants import PTONAddresses
-from tonutils.client import TonapiClient
-from tonutils.wallet import (WalletV4R2)
-from tonutils.utils import to_amount, to_nano
-
 from app.database.request import (set_user, get_user)
 import app.keyboards as kb
 
+from app.createwallet import create_wallet
+from app.getbalance import get_balance
+
 from config import API_KEY
 
-
-IS_TESTNET = False
-
 router = Router()
-
-async def create_wallet():
-    client = TonapiClient(api_key=API_KEY)
-    wallet, public_key, private_key, mnemonic = WalletV4R2.create(client)
-    return wallet.address.to_str(), mnemonic
-
-async def get_balance(mnemonic):
-    client = TonapiClient(api_key=API_KEY)
-    wallet, public_key, private_key, mnemonic = WalletV4R2.from_mnemonic(client, mnemonic)
-    
-    balance = await wallet.balance()
-def to_amount(balance):
-    return balance / 1_000_000_000  
-
-async def get_balance(mnemonic):
-    try:
-        client = TonapiClient(api_key=API_KEY)
-        wallet, public_key, private_key, mnemonic = WalletV4R2.from_mnemonic(client, mnemonic)
-        balance = await wallet.balance()
-        return to_amount(balance)  
-    except ValueError as e:
-        print(f"Ошибка получения баланса: {e}")
-        return "Ошибка получения баланса."
-
 
 @router.message(CommandStart())
 @router.callback_query(F.data == 'to_main')

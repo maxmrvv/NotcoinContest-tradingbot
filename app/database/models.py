@@ -16,8 +16,8 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     tg_id = mapped_column(BigInteger, unique=True)
-    address = mapped_column(String)  # Добавляем поле для адреса
-    mnemonic = mapped_column(String)  # Добавляем поле для мнемоника
+    address = mapped_column(String)  
+    mnemonic = mapped_column(String)  
     
 async def async_main():
     async with engine.begin() as conn:
